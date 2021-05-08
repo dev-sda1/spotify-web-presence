@@ -1,10 +1,10 @@
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
-let tokenExpireEpoch;
+var tokenExpireEpoch = 0;
 
 var scopes = ['user-read-currently-playing'],
     redirectUri = 'http://localhost/callback',
-    clientId = 'SPOTIFY_CLIENT_ID_HERE',
+    clientId = 'CLIENT_ID_HERE',
     state='some-state-of-my-choice';
 
 //Setting creds
@@ -18,7 +18,7 @@ var spotifyApi = new SpotifyWebApi({
 //console.log(authURL);
 
 //var accessToken = "";
-var refreshToken = "";
+var refreshToken = "REFRESH_TOKEN_HERE";
 
 //spotifyApi.setAccessToken(accessToken);
 spotifyApi.setRefreshToken(refreshToken);
@@ -38,14 +38,31 @@ function pleaseRefreshlmao(){
     )
 }
 
-app.get('/currentplaying', function(req,res){
-    if(Math.floor(Date.now() / 1000) - tokenExpireEpoch == 3600){
-        pleaseRefreshlmao()
+app.get('/api/currentplaying', function(req,res){
+    var owo = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
+    console.log(owo);
+    if(owo >= 3600){
+	//console.log("Time resetting, less than 3600 seconds (one hour)");
+        pleaseRefreshlmao();
+    }else{
+	//console.log("Not hit epoch yet");
     }
 
+    //console.log("Current UNIX: "+Math.floor(Date.now()/1000));
+    //console.log("Token Epoch: "+tokenExpireEpoch);
 
     spotifyApi.getMyCurrentPlayingTrack()
         .then(function(data){
+            
+
+            //console.log(data.body.item.external_urls['spotify']);
+            //console.log(data.body.item.album.external_urls['spotify']);
+            //console.log(data.body.item.id);
+            //var artist = data.body.item.artists[0]['name'];
+            //console.log(data.body.item.artists);
+            //console.log(artist);
+            console.log("hi")
+
             if(data.body === {}){
                 console.log("There is nothing.");
             }
@@ -75,8 +92,8 @@ app.get('/callback', function(req,res){
 
     spotifyApi.authorizationCodeGrant(code)
         .then(function(data){
-            console.log(data);
-            console.log('The token expires in ' + data['expires_in']);
+            //console.log(data);
+            //console.log('The token expires in ' + data['expires_in']);
             console.log('The access token is ' + data['access_token']);
             console.log('The refresh token is ' + data['refresh_token']);
 
@@ -89,5 +106,5 @@ app.get('/callback', function(req,res){
         })
 });
 
-pleaseRefreshlmao(); //Calls the refresh token on startup
+pleaseRefreshlmao();
 app.listen(1337);
