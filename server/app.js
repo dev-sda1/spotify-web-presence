@@ -66,7 +66,7 @@ function getPlaying(req,res){
                 artists += data.body.item.artists[0]['name']
             }
             
-            res.json({"trackname": data.body.item.name, "author": artists, "url": data.body.item.external_urls['spotify'], "playing": data.body.is_playing});
+            res.json({"trackname": data.body.item.name, "author": artists, "url": data.body.item.external_urls['spotify'], "albumart": data.body.item.album.images[2]["url"], "playing": data.body.is_playing});
         }, function(err){
             console.log("Something went wrong!", err);
         })
