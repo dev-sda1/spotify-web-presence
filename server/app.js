@@ -38,30 +38,18 @@ function pleaseRefreshlmao(){
     )
 }
 
-app.get('/api/currentplaying', function(req,res){
-    var owo = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
-    console.log(owo);
-    if(owo >= 3600){
-	//console.log("Time resetting, less than 3600 seconds (one hour)");
-        pleaseRefreshlmao();
-    }else{
-	//console.log("Not hit epoch yet");
-    }
-
-    //console.log("Current UNIX: "+Math.floor(Date.now()/1000));
-    //console.log("Token Epoch: "+tokenExpireEpoch);
-
+function getPlaying(req,res){
     spotifyApi.getMyCurrentPlayingTrack()
         .then(function(data){
             
-
+            //console.log(data.body.item.album.images[2]["url"]);
             //console.log(data.body.item.external_urls['spotify']);
             //console.log(data.body.item.album.external_urls['spotify']);
             //console.log(data.body.item.id);
             //var artist = data.body.item.artists[0]['name'];
             //console.log(data.body.item.artists);
             //console.log(artist);
-            console.log("hi")
+            //console.log("hi")
 
             if(data.body === {}){
                 console.log("There is nothing.");
@@ -82,6 +70,23 @@ app.get('/api/currentplaying', function(req,res){
         }, function(err){
             console.log("Something went wrong!", err);
         })
+}
+
+
+app.get('/api/currentplaying', function(req,res){
+    var owo = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
+    console.log(owo);
+    if(owo >= 3600){
+        pleaseRefreshlmao();
+        getPlaying(req,res);
+    }else{
+	//console.log("Not hit epoch yet");
+        getPlaying(req,res);
+    }
+
+    //console.log("Current UNIX: "+Math.floor(Date.now()/1000));
+    //console.log("Token Epoch: "+tokenExpireEpoch);
+
 });
 
 
