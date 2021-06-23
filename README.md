@@ -28,34 +28,35 @@ The client folder only serves as an example for how you could display it to the 
 2) Open a terminal and run ``npm install && node .`` to install required packages and to start it immediately.
 <img src="https://i.pyxlwuff.dev/2j05z.png">
 
-3) Ignore any errors that may appear from an absense of no refresh token. These will disappear after we get our refresh token.
-<img src="https://i.pyxlwuff.dev/xdfls.png">
+3) Once everything is installed, you'll be prompted in the console / terminal output to visit an auth url on Spotify's website to verify yourself. Make sure you're signed into the right spotify account before continuing.
+<img src="https://i.pyxlwuff.dev/kiqsw.png">
 
 4) If you've entered everything on the developer console and app.js correctly, you'll be taken to an OAuth page, where you'll need to click "Accept".
 <img src="https://i.pyxlwuff.dev/7uiy9.png">
 
-5) After clicking agree, check your console output for the tokens that spotify would've sent to you. Your access token expires after an hour, and your refresh token is used to acquire a new access token. **The refresh token never expires** unless you delete the app from your developer panel or you revoke access on your account settings. Stop the file to close the express server connection (typically ``CTRL+C``), as the callback function is now no longer needed.
-<img src="https://i.pyxlwuff.dev/owuxr.png">
+5) After clicking agree, check your console output for the tokens that spotify would've sent to you. Your access token expires after an hour, and your refresh token is used to acquire a new access token. **The refresh token never expires** unless you delete the app from your developer panel or you revoke access on your account settings.
+<img src="https://i.pyxlwuff.dev/01t6x.png">
 
-6) Copy the refresh token in its entirety and place it into the quotes on line 21 where it says ``REFRESH_TOKEN_HERE``. Proceed to comment out lines 17 and 18 again as they are no longer needed (for now).
-<img src="https://i.pyxlwuff.dev/obeg3.png">
-<img src="https://i.pyxlwuff.dev/zjrcu.png">
+6) Copy the refresh token in it's entirety and paste it into the `RefreshToken` column, save the json, then stop the application. If you're doing this on a linux-based SSH session (which is likely), you'll need to exit out of the node process before you're able to edit the config. (Done by pressing CTRL+C).
+<img src="https://i.pyxlwuff.dev/zi6js.png">
 
-7) Save the file and restart it by typing ``node .``. You should now not see anything in the output.
-<img src="https://i.pyxlwuff.dev/tngnz.png">
+7) Restart the application, where it should now only notify you that your (access) token has been refreshed. If you get a Spotify API error complaining about an invalid refresh token, check you pasted it correctly then try again.
+<img src="https://i.pyxlwuff.dev/3dplq.png">
 
-8) Open spotify and play a song. You can test your endpoint by visiting ``http://localhost:1337/api/currentplaying`` where it'll show you the track's name, author(s), a direct URL, and the playing state.
-<img src="https://i.pyxlwuff.dev/aablx.png">
+8) Open spotify and play a song. You can test your endpoint by visiting ``http://localhost:1337/api/currentplaying`` where it'll show you the track's name, author(s), a direct URL, albumn art URL from their CDN, and the playing state.
+<img src="https://i.pyxlwuff.dev/s9icy.png">
 
 You now have a spotify endpoint to show on your website!
 
 <h2>Running the API unattended</h2>
-I reccomend if you wish to run the api unattended on your server, you install something like forever on your prod server with ``npm install forever -g`` and run ``forever start app.js``
+There are many different ways that you're able to run this unattended on your production instance, I reccomend using something like PM2, although other alternatives are available.
+
 
 # Deploying to your server
 Deploying shouldn't be too much of a hassle, and chances are you'll be running this alongside your standard Apache/NGINX install. The guides below from DigitalOcean and IONOS should help!
 
-- Nginx Users: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
+- Nginx Users: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04 (Also includes tutorial for those who just want to set it up with PM2 and not with Nginx)
+
 - Apache users: https://www.ionos.com/digitalguide/websites/web-development/nodejs-for-a-website-with-apache-on-ubuntu/
 
 # Closing thoughts
@@ -63,4 +64,4 @@ Deploying shouldn't be too much of a hassle, and chances are you'll be running t
 If you need any extra help don't be afraid to raise an issue on Github.
 If you want to contribute at all for some reason, you're free to open a PR too :D
 
-API endpoint and server security is your responsibility. This program comes with ABSOLUTELY NO WARRANTY.
+**API endpoint and server security is your responsibility. This program comes with ABSOLUTELY NO WARRANTY.**
