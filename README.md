@@ -1,6 +1,7 @@
 # spotify-web-presence
 
-![image](https://user-images.githubusercontent.com/43112896/122792185-d5074580-d2b1-11eb-80ae-32d92732d225.png)
+<img src="https://user-images.githubusercontent.com/43112896/122792185-d5074580-d2b1-11eb-80ae-32d92732d225.png">
+<img src="https://i.pyxlwuff.dev/2nl0a.png">
 
 A quick way to display what your currently playing song on Spotify is on your website or elsewhere in a JSON format.
 If you have any questions / improvements send me a dm or open a PR :p 
@@ -23,11 +24,12 @@ The client folder only serves as an example for how you could display it to the 
 3) Click edit settings and scroll down to the Redirect URIs section. This is what spotify uses to tell our server that authentication was a success when we get to acquiring our access and refresh tokens. As this is being used on a portfolio (personal) website hopefully, all you'll need is to add localhost. Type ``http://localhost:1337/callback`` and click add, then save.
 <img src="https://i.pyxlwuff.dev/w736l.png">
 
-<h2>Configuring the files</h2>
-1) Clone the repository and uncomment lines 17 and 18 on ``app.js`` in the server folder. Insert your Client ID from the app dashboard into the clientID field between the quotes on line 7. Repeat for the client secret on line 14.
-<img src="https://i.pyxlwuff.dev/3gsqj.png">
+<h2>Configuring the server</h2>
+1) Clone the repository into your directory of choice for the endpoint and enter the config.json file in the server folder, where you'll need to paste your client token and secret into the labelled fields. Keep the refresh token space blank that is how spotify will know it's you later.
+<img src="https://i.pyxlwuff.dev/ab8o0.png">
 
-2) Open a terminal and run ``npm install && node .`` to install required packages and to start it immediately.
+
+2) Save the config.json file and exit out, then open a terminal and run ``npm install && node .`` to install the 14 trillion node dependencies and to start it immediately.
 <img src="https://i.pyxlwuff.dev/2j05z.png">
 
 3) Once everything is installed, you'll be prompted in the console / terminal output to visit an auth url on Spotify's website to verify yourself. Make sure you're signed into the right spotify account before continuing.
@@ -36,7 +38,7 @@ The client folder only serves as an example for how you could display it to the 
 4) If you've entered everything on the developer console and app.js correctly, you'll be taken to an OAuth page, where you'll need to click "Accept".
 <img src="https://i.pyxlwuff.dev/7uiy9.png">
 
-5) After clicking agree, check your console output for the tokens that spotify would've sent to you. Your access token expires after an hour, and your refresh token is used to acquire a new access token. **The refresh token never expires** unless you delete the app from your developer panel or you revoke access on your account settings.
+5) After clicking agree, check your console output for the tokens that spotify would've sent to you. Your access token expires after an hour, and your refresh token is used to acquire a new access token. **The refresh token never expires** unless you delete the app from your developer panel or you revoke access on your account settings, therefore it is absoloutely essential you keep your server secure and the refresh token secret.
 <img src="https://i.pyxlwuff.dev/01t6x.png">
 
 6) Copy the refresh token in it's entirety and paste it into the `RefreshToken` column, save the json, then stop the application. If you're doing this on a linux-based SSH session (which is likely), you'll need to exit out of the node process before you're able to edit the config. (Done by pressing CTRL+C).
