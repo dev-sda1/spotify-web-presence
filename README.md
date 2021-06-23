@@ -1,14 +1,16 @@
 # spotify-web-presence
-Shows on my [website](https://pyxlwuff.dev) what song i'm currently listening to on Spotify with direct url to track. Created with spotify-web-api.
 
-If you have any questions / improvements don't be afraid to contact or submit a PR :p
+![image](https://user-images.githubusercontent.com/43112896/122792185-d5074580-d2b1-11eb-80ae-32d92732d225.png)
+
+A quick way to display what your currently playing song on Spotify is on your website or elsewhere in a JSON format.
+If you have any questions / improvements send me a dm or open a PR :p 
  
 # Prerequisites
-- NodeJS and npm
+- NodeJS and npm (sadly this was done with express)
 - Spotify Account
 - A webserver to host the endpoint on
 
-# Setting up (Server-side only)
+# Setting up (Server-side)
 The client folder only serves as an example for how you could display it to the client.
 
 <h2>Creating your app</h2>
