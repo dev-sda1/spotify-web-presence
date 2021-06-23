@@ -26,7 +26,7 @@ The client folder only serves as an example for how you could display it to the 
 
 <h2>Configuring the server</h2>
 1) Clone the repository into your directory of choice for the endpoint and enter the config.json file in the server folder, where you'll need to paste your client token and secret into the labelled fields. Keep the refresh token space blank that is how spotify will know it's you later.
-<img src="https://i.pyxlwuff.dev/ab8o0.png">
+<img src="https://i.pyxlwuff.dev/3xsa3.png">
 
 
 2) Save the config.json file and exit out, then open a terminal and run ``npm install && node .`` to install the 14 trillion node dependencies and to start it immediately.
