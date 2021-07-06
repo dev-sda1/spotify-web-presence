@@ -1,3 +1,18 @@
+// spotify-web-presence
+// By: dev-sda1
+// Version 1.0
+// GitHub Repo: https://github.com/dev-sda1/spotify-web-presence
+
+// Changelog
+// 1.0 [6/7/2021]
+// - First Major Version!!11
+// - Added album URLs to JSON output
+// - Added seperate artist outputs to JSON output
+// - Errors on the data fetching of /currentplaying will now output in console instead of
+//   relaying in the browser as "no track playing"
+// 
+
+
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
 const config = require("./config.json");
@@ -52,43 +67,37 @@ function getPlaying(req, res) {
     spotifyApi.getMyCurrentPlayingTrack()
         .then(function (data) {
 
-            //console.log(data.body.item.album.images[2]["url"]);
-            //console.log(data.body.item.external_urls['spotify']);
-            //console.log(data.body.item.album.external_urls['spotify']);
-            //console.log(data.body.item.album.name);
-            //var artist = data.body.item.artists[0]['name'];
-            //console.log(data.body.item.artists);
-            //console.log(artist);
-            //console.log("hi")
+            console.log(data.body.item.artists[0].name);
+            console.log(data.body.item.artists[0].external_urls.spotify);
 
             if (data.body === {}) {
                 console.log("There is nothing.");
             }
 
             var artists = "";
+            var authors = {};
             var i;
 
             try {
                 if (data.body.item.artists.length > 1) {
                     for (i = 0; i < data.body.item.artists.length; i++) {
-                        artists += data.body.item.artists[i]['name'] + ", "
+                        authors[data.body.item.artists[i].name] = data.body.item.artists[i].external_urls.spotify;
                     }
                 } else {
-                    artists += data.body.item.artists[0]['name']
+                    authors[data.body.item.artists[0]['name']] = data.body.item.artists[0].external_urls.spotify;
                 }
 
                 res.json({
                     "trackname": data.body.item.name,
-                    "author": artists,
-                    "url": data.body.item.external_urls['spotify'],
                     "albumtitle": data.body.item.album.name,
                     "albumart": data.body.item.album.images[1]["url"],
                     "playing": data.body.is_playing,
-                    "urls": { "authorURL": "", "albumURL": "", "songURL": "" }
+                    "urls": { "albumURL": data.body.item.album.external_urls['spotify'], "trackURL": data.body.item.external_urls['spotify'], "artists": authors }
                 });
 
             } catch (e) {
                 res.json({ "notice": "No sound playing" });
+                console.log(e);
             }
 
         }, function (err) {
@@ -99,9 +108,9 @@ function getPlaying(req, res) {
 
 
 app.get('/api/currentplaying', function (req, res) {
-    var owo = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
-    console.log(owo);
-    if (owo >= 3600) {
+    var timesincetoken = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
+    //console.log(timesincetoken);
+    if (timesincetoken >= 3600) {
         pleaseRefreshlmao();
         getPlaying(req, res);
     } else {
@@ -115,6 +124,7 @@ app.get('/api/currentplaying', function (req, res) {
 });
 
 
+// Callback - for when you're setting the API up for the first time
 
 app.get('/callback', function (req, res) {
     var code = req.query.code;
@@ -137,7 +147,7 @@ app.get('/callback', function (req, res) {
                 //res.status(err.code);
                 //res.send(err.message);
                 //res.sendStatus(500).json({"success": false});
-                console.log("oh fuck it errored. error was: " + err.message);
+                console.log("Fatal error! Couldn't get an auth token: " + err.message);
             })
     }
 });
