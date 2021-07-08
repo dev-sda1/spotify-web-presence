@@ -1,7 +1,7 @@
 # spotify-web-presence
 
-<img src="https://user-images.githubusercontent.com/43112896/122792185-d5074580-d2b1-11eb-80ae-32d92732d225.png">
-<img src="https://i.pyxlwuff.dev/2nl0a.png">
+![image](https://user-images.githubusercontent.com/43112896/124996746-62cc8a00-e041-11eb-8893-86823e9330a1.png)
+![image](https://user-images.githubusercontent.com/43112896/124996773-6f50e280-e041-11eb-804b-ae7d33148943.png)
 
 A quick way to display what your currently playing song on Spotify is on your website or elsewhere in a JSON format.
 If you have any questions / improvements send me a dm or open a PR :p 
