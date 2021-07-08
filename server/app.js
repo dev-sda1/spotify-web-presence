@@ -4,6 +4,13 @@
 // GitHub Repo: https://github.com/dev-sda1/spotify-web-presence
 
 // Changelog
+// 1.0.1 [8/7/2021]
+// - Made data fetching for the artist dataset easier by adding names
+//   into their own seperate value.
+// 
+// - Fixed the client jQuery example not replicating the new output
+//   formats.
+//
 // 1.0 [6/7/2021]
 // - First Major Version!!11
 // - Added album URLs to JSON output
@@ -75,16 +82,16 @@ function getPlaying(req, res) {
             }
 
             var artists = "";
-            var authors = {};
+            var authors = [];
             var i;
 
             try {
                 if (data.body.item.artists.length > 1) {
                     for (i = 0; i < data.body.item.artists.length; i++) {
-                        authors[data.body.item.artists[i].name] = data.body.item.artists[i].external_urls.spotify;
+                        authors[i] = {"name": data.body.item.artists[i].name, "url": data.body.item.artists[i].external_urls.spotify};
                     }
                 } else {
-                    authors[data.body.item.artists[0]['name']] = data.body.item.artists[0].external_urls.spotify;
+                    authors[0] = {"name": data.body.item.artists[0].name, "url": data.body.item.artists[0].external_urls.spotify};
                 }
 
                 res.json({
