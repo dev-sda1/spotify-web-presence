@@ -23,10 +23,10 @@
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
 const config = require("./config.json");
-var tokenExpireEpoch = 0;
 var cors = require('cors');
 const e = require("express");
 
+var tokenExpireEpoch;
 var scopes = ['user-read-currently-playing'],
     redirectUri = 'http://localhost:1337/callback',
     clientId = config.ClientToken,
@@ -39,30 +39,29 @@ var spotifyApi = new SpotifyWebApi({
     clientSecret: config.ClientSecret
 });
 
-//var authURL = spotifyApi.createAuthorizeURL(scopes,state);
-//console.log(authURL);
-
-//var accessToken = "";
 var refreshToken = config.RefreshToken;
-
-//spotifyApi.setAccessToken(accessToken);
 spotifyApi.setRefreshToken(refreshToken);
 
 const app = express()
 app.use(cors())
 
-function pleaseRefreshlmao() {
+function refreshAccToken() {
+    var done;
     //Check to see if a token exists on the config.
     spotifyApi.refreshAccessToken().then(
         function (data) {
             console.log("The token has been refresh!");
             tokenExpireEpoch = Math.floor(Date.now() / 1000);
             spotifyApi.setAccessToken(data.body['access_token']);
+            done = true
         },
         function (err) {
             console.log("Couldn't refresh token! Error:", err);
+            done = false;
         }
     )
+
+    return done;
 }
 
 function generateToken() {
@@ -118,7 +117,7 @@ app.get('/api/currentplaying', function (req, res) {
     var timesincetoken = Number(Math.floor(Date.now() / 1000) - tokenExpireEpoch);
     //console.log(timesincetoken);
     if (timesincetoken >= 3600) {
-        pleaseRefreshlmao();
+        refreshAccToken();
         getPlaying(req, res);
     } else {
         //console.log("Not hit epoch yet");
@@ -163,7 +162,8 @@ app.get('/callback', function (req, res) {
 if (refreshToken == "") {
     generateToken();
 } else {
-    pleaseRefreshlmao();
+    var a = refreshAccToken();
+    console.log(a);
 }
 
 app.listen(1337);

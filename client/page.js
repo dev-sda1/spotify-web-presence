@@ -32,6 +32,10 @@ $.ajax({
                     //authors[i] = {"name": data.body.item.artists[i].name, "url": data.body.item.artists[i].external_urls.spotify};
                     authors += resp.urls.artists[i].name + ", ";
                 }
+
+                //Remove the last , at the end of the authors string
+                authors = authors.substring(0, authors.length - 2);
+                
             } else {
                 authors += resp.urls.artists[0].name
             }
