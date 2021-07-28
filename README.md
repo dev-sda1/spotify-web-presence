@@ -47,8 +47,8 @@ The client folder only serves as an example for how you could display it to the 
 7) Restart the application, where it should now only notify you that your (access) token has been refreshed. If you get a Spotify API error complaining about an invalid refresh token, check you pasted it correctly then try again.
 <img src="https://i.pyxlwuff.dev/3dplq.png">
 
-8) Open spotify and play a song. You can test your endpoint by visiting ``http://localhost:1337/api/currentplaying`` where it'll show you the track's name, author(s), a direct URL, albumn art URL from their CDN, and the playing state.
-<img src="https://i.pyxlwuff.dev/s9icy.png">
+8) Open spotify and play a song. You can test your endpoint by visiting ``http://localhost:1337/api/currentplaying`` where it'll show you the track's name, author(s), a direct URL, albumn art URL from their CDN, and the playing state. (Screenshot was from MS Edge Devtools. You can use this if you find the output json in the browser hard to read properly)
+![image](https://user-images.githubusercontent.com/43112896/127400600-5e9a13c9-ef33-4624-9cf4-e88bb42e8729.png)
 
 You now have a spotify endpoint to show on your website!
 
