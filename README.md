@@ -5,6 +5,8 @@
 
 A quick way to display what your currently playing song on Spotify is on your website or elsewhere in a JSON format.
 If you have any questions / improvements send me a dm or open a PR :p 
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E1HLTE)
  
 # Prerequisites
 - NodeJS and npm (sadly this was done with express)
